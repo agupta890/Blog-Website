@@ -8,6 +8,7 @@ const connectDB = require('./utils/connection')
 const authRoutes = require('./routes/auth-routes')
 const blogRoutes = require('./routes/blog-routes')
 const adminRoutes = require('./routes/admin-routes')
+const contactRoutes = require('./routes/contact-routes')
 
 //set middlewares
 
@@ -19,8 +20,8 @@ app.use(cookieParser())
 
 app.use('/api/auth',authRoutes)
 app.use('/api',blogRoutes)
-app.use('/api',adminRoutes)
-
+app.use('/api/auth',adminRoutes)
+app.use('/api',contactRoutes)
 
 //start server
 
