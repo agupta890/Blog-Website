@@ -4,8 +4,13 @@ import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { useContext } from 'react'
+import {AuthContext} from '../context/AuthContext'
 
 export const Login = () => {
+
+  //setup context 
+  const {setUser} = useContext(AuthContext)
   const navigate = useNavigate()
   //import baseUrl
 
@@ -25,6 +30,7 @@ export const Login = () => {
       
       toast.success(response.data.message)
       reset()
+      setUser(response.data.data); 
       navigate('/')
 
 
