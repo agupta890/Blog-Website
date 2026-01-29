@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cookieParser = require("cookie-parser")
 const app = express()
+const cors = require('cors')
 
 //import files
 const connectDB = require('./utils/connection')
@@ -15,6 +16,13 @@ const contactRoutes = require('./routes/contact-routes')
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
+app.use(cors(
+    {
+        origin:"http://localhost:5173",
+        methods:["GET","POST","PUT","DELETE"],
+        credentials:true
+    }
+))
 
 // base routes
 

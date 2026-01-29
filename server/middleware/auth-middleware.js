@@ -10,7 +10,7 @@ try {
     if(!decode){
         return res.status(STATUS.BAD_REQUEST).json({message:"Invalid token"})
     }
-    req.user = {id:decode._id,role:decode.role}
+    req.user = {id:decode._id,username:decode.username,email:decode.email,role:decode.role}
     
     next()
 } catch (error) {

@@ -139,4 +139,22 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { register, login,logout };
+//get logged user data
+
+const getMe = (req, res) => {
+  try {
+    // Auth middleware already req.user set karta hai
+    if (!req.user) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    res.status(200).json({
+      success: true,
+      user: req.user, // frontend me ye use karenge
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
+
+module.exports = { register, login,logout,getMe };
