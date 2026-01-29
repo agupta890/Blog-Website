@@ -28,7 +28,9 @@ return res.status(STATUS.BAD_REQUEST).json({message:"All fields are required"})
 
 const getAllblogs = async(req,res)=>{
     try {
-        const Allblogs = await Blog.find()
+        const _start = parseInt(req.query._start) || 0
+        const _limit = parseInt(req.query._limit) || 4
+        const Allblogs = await Blog.find().skip(_start).limit(_limit)
         
         if(Allblogs.length===0){
             return res.status(STATUS.OK).json({message:"No records..."})

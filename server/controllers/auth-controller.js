@@ -97,7 +97,7 @@ const login = async (req, res) => {
 
     // genrate token
     const token = jwt.sign(
-      { id: existUser._id, email: existUser.email, role: existUser.role },
+      { id: existUser._id, username:existUser.username,email: existUser.email, role: existUser.role },
       process.env.SECRET_KEY,
       { expiresIn: "1d" },
     );
@@ -150,8 +150,9 @@ const getMe = (req, res) => {
 
     res.status(200).json({
       success: true,
-      user: req.user, // frontend me ye use karenge
+      user: req.user,
     });
+    
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
