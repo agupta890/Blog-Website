@@ -50,33 +50,53 @@ setPageNumber((prev)=>prev-1)
     {data>10 ?(
       <p>No blogs...</p>
     ):(
-      <div className="flex flex-wrap justify-center gap-4 px-4 py-6">
+      <div className="flex flex-col gap-6 px-4 py-6 max-w-6xl mx-auto">
+
       {data.map((blogs) => (
         <div
-          key={blogs._id}
-          className="flex flex-col max-w-sm w-full sm:w-[48%] md:w-[32%] lg:w-[24%] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
-        >
-          {/* Image Section */}
-          <img
-            src={blogs.imgUrl || "https://via.placeholder.com/400x200"}
-            alt={blogs.title}
-            className="w-full h-48 object-cover"
-          />
+  key={blogs._id}
+  className="w-full bg-white rounded-lg shadow-md hover:shadow-lg transition flex flex-col md:flex-row overflow-hidden"
+>
+  {/* Image Section */}
+  <div className="md:w-1/3 w-full h-56 md:h-auto">
+    <img
+      src={blogs.imgUrl || "https://via.placeholder.com/400x250"}
+      alt={blogs.title}
+      className="w-full h-full object-cover"
+    />
+  </div>
 
-          {/* Content Section */}
-          <div className="p-5 flex flex-col flex-1">
-            {/* Title */}
-            <h2 className="text-2xl font-semibold mb-3">{blogs.title}</h2>
+  {/* Content Section */}
+  <div className="md:w-2/3 w-full p-6 flex flex-col">
 
-            {/* Description */}
-            <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-1">{blogs.content}</p>
+    {/* Title */}
+    <h2 className="text-2xl font-semibold mb-2 line-clamp-2">
+      {blogs.title}
+    </h2>
 
-            {/* Button */}
-           <Link to = {`/blogs/${blogs._id}`}><button className="text-blue-600 font-medium uppercase tracking-wide hover:underline mt-auto">
-              Read More
-            </button></Link> 
-          </div>
-        </div>
+    {/* Description */}
+    <p className="text-gray-600 mb-4 line-clamp-3">
+      {blogs.content}
+    </p>
+
+    {/* Footer */}
+    <div className="flex justify-between items-center mt-auto">
+
+      <span className="text-sm text-gray-500">
+        {blogs.author}
+      </span>
+
+      <Link to={`/blogs/${blogs._id}`}>
+        <button className="text-blue-600 font-medium hover:underline">
+          Read More →
+        </button>
+      </Link>
+
+    </div>
+
+  </div>
+</div>
+
       ))}
 
       

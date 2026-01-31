@@ -54,10 +54,12 @@ if (isLoading) return <h1>Loading...</h1>
         className="rounded-xl mb-8 w-full object-cover"
       />
 
-      {/* Article Content */}
-      <article className="prose prose-lg max-w-none text-gray-800">
-        {data.content}
-      </article>
+     {/* Content */}
+          <div className="prose prose-zinc max-w-none">
+            <p className="text-zinc-700 leading-relaxed whitespace-pre-line">
+              {data.content}
+            </p>
+          </div>
 
     </div>
   </div>

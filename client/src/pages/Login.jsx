@@ -10,7 +10,8 @@ import {AuthContext} from '../context/AuthContext'
 export const Login = () => {
 
   //setup context 
-  const {setUser} = useContext(AuthContext)
+  const {user,setUser} = useContext(AuthContext)
+ 
   const navigate = useNavigate()
   //import baseUrl
 
@@ -18,6 +19,7 @@ export const Login = () => {
   //form validation
 
   const {register,handleSubmit,reset,formState:{errors}}=useForm({resolver:zodResolver(LoginSchema)})
+   
 
   //handle submission
   const onSubmit =async(data)=>{
@@ -28,10 +30,13 @@ export const Login = () => {
         }
       )
       
+      
       toast.success(response.data.message)
       reset()
       setUser(response.data.data); 
+   
       navigate('/')
+      
 
 
     } catch (error) {

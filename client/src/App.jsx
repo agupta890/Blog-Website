@@ -9,6 +9,13 @@ import {Login} from './pages/Login'
 import {Contact} from './pages/Contact'
 import { Toaster } from "react-hot-toast";
 import {SingleBlog} from './pages/SingleBlog'
+import {AdminLayout} from './dashboard/AdminLayout'
+import {AllBlogs} from './dashboard/AllBlogs'
+import {CreateBlog} from './dashboard/CreateBlog'
+import {Users} from './dashboard/Users'
+import {ContactInfo} from './dashboard/ContactInfo'
+import {EditBlog} from './pages/EditBlog'
+
  const App = () => {
   return (
    <>
@@ -20,11 +27,30 @@ import {SingleBlog} from './pages/SingleBlog'
     <Route path='/blogs' element={<BlogPage/>}/>
      <Route path='/contact' element={<Contact/>}/>
      <Route path='/blogs/:id' element={<SingleBlog/>}/>
+     <Route path='/edit/:id' element={<EditBlog/>}/>
+     <Route path="/admin" element={<AdminLayout />}>
+
+          <Route path="create-blog" element={<CreateBlog />} />
+          <Route path="blogs" element={<AllBlogs />} />
+          <Route path="users" element={<Users />} />
+          <Route path="contact" element={<ContactInfo/>} />
+          
+
+
+        </Route>
+
+     
+    
+     
 
    </Routes>
    <Toaster position="bottom-right" reverseOrder={false} />
 
    <Footer/>
+   
+
+        
+     
    </>
   )
 }
