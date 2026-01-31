@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import {Link} from 'react-router-dom'
 
 export const BlogCard = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -46,7 +47,10 @@ setPageNumber((prev)=>prev-1)
 
   return (
     <>
-    <div className="flex flex-wrap justify-center gap-4 px-4 py-6">
+    {data>10 ?(
+      <p>No blogs...</p>
+    ):(
+      <div className="flex flex-wrap justify-center gap-4 px-4 py-6">
       {data.map((blogs) => (
         <div
           key={blogs._id}
@@ -68,15 +72,17 @@ setPageNumber((prev)=>prev-1)
             <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-1">{blogs.content}</p>
 
             {/* Button */}
-            <button className="text-blue-600 font-medium uppercase tracking-wide hover:underline mt-auto">
+           <Link to = {`/blogs/${blogs._id}`}><button className="text-blue-600 font-medium uppercase tracking-wide hover:underline mt-auto">
               Read More
-            </button>
+            </button></Link> 
           </div>
         </div>
       ))}
 
       
     </div>
+    )}
+    
     <div className="flex item-center justify-center gap-4 m-2">
         <button className="bg-emerald-500 px-4 py-2 rounded-sm" onClick={handlePrev}>Prev</button>
         <p className="text-xl font-semibold">{pageNumber}</p>

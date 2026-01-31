@@ -8,6 +8,7 @@ import {Register} from './pages/Register'
 import {Login} from './pages/Login'
 import {Contact} from './pages/Contact'
 import { Toaster } from "react-hot-toast";
+import {SingleBlog} from './pages/SingleBlog'
  const App = () => {
   return (
    <>
@@ -18,6 +19,7 @@ import { Toaster } from "react-hot-toast";
     <Route path='/login' element={<Login/>}/>
     <Route path='/blogs' element={<BlogPage/>}/>
      <Route path='/contact' element={<Contact/>}/>
+     <Route path='/blogs/:id' element={<SingleBlog/>}/>
 
    </Routes>
    <Toaster position="bottom-right" reverseOrder={false} />
