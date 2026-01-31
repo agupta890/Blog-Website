@@ -1,42 +1,54 @@
-require('dotenv').config()
-const express = require('express')
-const cookieParser = require("cookie-parser")
-const app = express()
-const cors = require('cors')
+require('dotenv').config();
+const express = require('express');
+const cookieParser = require("cookie-parser");
+const cors = require('cors');
+const app = express();
 
-//import files
-const connectDB = require('./utils/connection')
-const authRoutes = require('./routes/auth-routes')
-const blogRoutes = require('./routes/blog-routes')
-const adminRoutes = require('./routes/admin-routes')
-const contactRoutes = require('./routes/contact-routes')
+// DB
+const connectDB = require('./utils/connection');
 
-//set middlewares
+// Routes
+const authRoutes = require('./routes/auth-routes');
+const blogRoutes = require('./routes/blog-routes');
+const adminRoutes = require('./routes/admin-routes');
+const contactRoutes = require('./routes/contact-routes');
 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(cookieParser())
-app.use(cors(
-    {
-        origin:"https://gainknowledge-blog-frontend.onrender.com",
-        methods:["GET","POST","PUT","DELETE"],
-        credentials:true
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://gainknowledge-blog-frontend.onrender.com"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
     }
-))
 
-// base routes
+  },
+  credentials: true
+}));
 
-app.use('/api/auth',authRoutes)
-app.use('/api',blogRoutes)
-app.use('/api/auth',adminRoutes)
-app.use('/api',contactRoutes)
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api', blogRoutes);
+app.use('/api/auth', adminRoutes);
+app.use('/api', contactRoutes);
 
-//start server
+// Server Start
+const port = process.env.PORT || 3000;
 
-const port = process.env.port || 3000
-connectDB().then(()=>{
-app.listen(port,()=>{
-    console.log("server is running on port",port)
-})
-
-})
+connectDB().then(() => {
+  app.listen(port, () => {
+    console.log("Server running on port", port);
+  });
+});
