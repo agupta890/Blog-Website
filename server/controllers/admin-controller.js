@@ -6,7 +6,9 @@ const STATUS = require('../utils/status-code')
 //getusers controller
 const getAllUser =async(req,res)=>{
 try {
-    const getUsers = await User.find()
+    const _start = parseInt(req.query._start) || 0
+    const _limit = parseInt(req.query._limit) || 4
+    const getUsers = await User.find().skip(_start).limit(_limit)
     if(!getUsers){
         return res.status(STATUS.BAD_REQUEST).json({message:"No user found"})
     }
@@ -21,7 +23,9 @@ try {
 
 const getAllMessage =async(req,res)=>{
 try {
-    const getMessage = await Contact.find()
+    const _start = parseInt(req.query._start) || 0
+    const _limit = parseInt(req.query._limit) || 4
+    const getMessage = await Contact.find().skip(_start).limit(_limit)
     if(!getMessage){
         return res.status(STATUS.BAD_REQUEST).json({message:"No Message..."})
     }
