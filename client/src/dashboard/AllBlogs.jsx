@@ -2,8 +2,12 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {Link} from 'react-router-dom'
+import {toast} from 'react-hot-toast'
+import { useQueryClient } from "@tanstack/react-query";
+
 
 export const AllBlogs = () => {
+  const queryClient = useQueryClient()
   // API Base URL
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -50,7 +54,7 @@ export const AllBlogs = () => {
     queryKey: ["blogs", pageNumber],
     queryFn: fetchData,
   });
-  console.log(data);
+
 
   // Loading State
   if (isLoading) {
@@ -60,6 +64,25 @@ export const AllBlogs = () => {
   // Error State
   if (isError) {
     return <p className="text-center mt-6 text-red-500">{error.message}</p>;
+  }
+
+  // delete blog
+
+  const handleDeleteBlog = async(id)=>{
+    const confirmDelete = window.confirm("Are you sure you want to delete this blog?");
+
+  if (!confirmDelete) return;
+try {
+  const response = await axios.delete(`${API_URL}/blogs/${id}`,
+    {withCredentials:true}
+  )
+  toast.success(response.data.message)
+  queryClient.invalidateQueries(["blogs"]);
+
+
+} catch (error) {
+  toast.error(error?.response?.data?.message ||"Something went wrong")
+}
   }
 
   return (
@@ -98,7 +121,7 @@ export const AllBlogs = () => {
               <div className="flex justify-between mt-4">
                 <Link to={`/edit/${blogs._id}`}><button className="text-blue-600 hover:underline">Edit</button></Link>
 
-                <button className="text-red-600 hover:underline">Delete</button>
+                <button className="text-red-600 hover:underline" onClick={()=>handleDeleteBlog(blogs._id)}>Delete</button>
               </div>
             </div>
           ))}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext, useEffect } from 'react'
 import {Routes,Route} from 'react-router-dom'
 import {Header} from './components/Header'
 import {Footer} from './components/Footer'
@@ -15,8 +15,25 @@ import {CreateBlog} from './dashboard/CreateBlog'
 import {Users} from './dashboard/Users'
 import {ContactInfo} from './dashboard/ContactInfo'
 import {EditBlog} from './pages/EditBlog'
+import {AuthContext}  from './context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+
+
 
  const App = () => {
+  const {user} = useContext(AuthContext)
+  const navigate = useNavigate()
+  useEffect(() => {
+
+    if (user?.role === "admin") {
+      navigate("/admin");
+    }
+
+    if (user?.role === "user") {
+      navigate("/");
+    }
+
+  }, [user]);
   return (
    <>
    <Header/>

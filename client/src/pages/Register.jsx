@@ -48,10 +48,10 @@ export const Register = () => {
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* Username */}
           <div>
-            <label className="block mb-1 text-sm font-medium">Username</label>
+            <label className="block mb-1 text-sm font-medium">Name</label>
             <input
               type="text"
-              placeholder="Enter username"
+              placeholder="Enter full name"
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("username")}
             />

@@ -3,8 +3,11 @@ import { Link, } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+
+  const navigate =useNavigate()
   //api base url
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -21,6 +24,7 @@ export const Header = () => {
     await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
 
     setUser(null);
+    navigate('/')
   };
 
   return (
