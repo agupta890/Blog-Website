@@ -15,7 +15,7 @@ try {
         name:createMessage.name,
         message:createMessage.message
     }
-    return res.status(STATUS.CREATED).json({message:"your contact message is created",data:contactData})
+    return res.status(STATUS.CREATED).json({message:"Message Sent",data:contactData})
 } catch (error) {
     return res.status(STATUS.SERVER_ERROR).json({message:"Internal server error"})
 }
