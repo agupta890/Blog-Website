@@ -50,7 +50,7 @@ const register = async (req, res) => {
       .status(STATUS.CREATED)
       .cookie("token", token, {
         httpOnly: true,
-        secure: true ,
+        secure: true,
         sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000,
       })
@@ -76,7 +76,9 @@ const login = async (req, res) => {
     // check user is exist or not
     const existUser = await User.findOne({ email }).select("+password");
     if (!existUser) {
-      return res.status(STATUS.BAD_REQUEST).json({ message: "User not register" });
+      return res
+        .status(STATUS.BAD_REQUEST)
+        .json({ message: "User not register" });
     }
 
     //login logic using bcrypt compare method
@@ -97,7 +99,12 @@ const login = async (req, res) => {
 
     // genrate token
     const token = jwt.sign(
-      { id: existUser._id, username:existUser.username,email: existUser.email, role: existUser.role },
+      {
+        id: existUser._id,
+        username: existUser.username,
+        email: existUser.email,
+        role: existUser.role,
+      },
       process.env.SECRET_KEY,
       { expiresIn: "1d" },
     );
@@ -106,7 +113,7 @@ const login = async (req, res) => {
       .status(STATUS.OK)
       .cookie("token", token, {
         httpOnly: true,
-        secure: true ,
+        secure: true,
         sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000,
       })
@@ -152,10 +159,11 @@ const getMe = (req, res) => {
       success: true,
       user: req.user,
     });
-    
   } catch (error) {
-    res.status(500).json({ message: "Internal server error", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };
 
-module.exports = { register, login,logout,getMe };
+module.exports = { register, login, logout, getMe };
